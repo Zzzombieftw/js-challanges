@@ -653,7 +653,13 @@ isPrime(200) //=> false
 -----------------------------------------------------------------------------*/
 // Your solution for 20-isPrime here:
 
-
+function isPrime(n) {
+  if (n < 2 || !Number.isInteger(n)) return false;
+  for (var i = 2; i <= n / 2; i++) {
+    if (Number.isInteger(n / i)) return false;
+  }
+  return true;
+}
 
 
 
@@ -681,7 +687,30 @@ primeFactors(200) //=> [2, 2, 2, 5, 5]
 -----------------------------------------------------------------------------*/
 // Your solution for 21-primeFactors here:
 
+function primeFactors(n) {
+  let factors = []
+  if (n < 2 || !Number.isInteger(n)) return factors
+  function isPrime(n) {
+    if (n < 2 || !Number.isInteger(n)) return false
+    for (var i = 2; i <= n / 2; i++) {
+      if (Number.isInteger(n / i)) return false
+    }
+    return true
+  }
 
+  let prime = 2
+  while (!isPrime(n)) {
+    if (Number.isInteger(n / prime)) {
+      factors.push(prime)
+      n = n / prime
+    } else {
+      prime++
+      while (!isPrime(prime)) prime++
+    }
+  }
+  factors.push(n)
+  return factors
+}
 
 
 
@@ -706,7 +735,19 @@ intersection([1, 'a', true, 1, 1], [true, 1, 'b', 1]) //=> [1, true, 1]
 -----------------------------------------------------------------------------*/
 // Your solution for 22-intersection here:
 
-
+function intersection(arr1, arr2) {
+  // console.log('arr1:', arr1)
+  // console.log('arr2: ', arr2)
+  let result = []
+  let dupes = [...arr2]
+  arr1.forEach((el) => {
+    let i = dupes.indexOf(el)
+    // console.log(i)
+    // console.log('dupes: ', dupes)
+    if (i > -1) result.push(dupes.splice(i, 1)[0])
+  });
+  return result
+}
 
 
 
@@ -732,7 +773,23 @@ balancedBrackets( '[({}[])]' ) // => true
 -----------------------------------------------------------------------------*/
 // Your solution for 23-balancedBrackets here:
 
-
+function balancedBrackets(str) {
+  // str includes '[{(' or ']})'
+  // balancedBracket = even number char times 2
+  if (str.length % 2) return false
+  // console.log(str)
+  let brackets = []
+  for (let i = 0; i < str.length; i++) {
+    let bracket = str.charAt(i);
+    // console.log('bracket: ', bracket)
+    if ("([{".includes(bracket)) {
+      brackets.push(bracket)
+    } else {
+      if (!'() {} []'.includes(brackets.pop() + bracket)) return false
+    }
+  }
+  return true
+}
 
 
 
@@ -762,6 +819,9 @@ isWinningTicket( [ ['ABC', 66], ['dddd', 15], ['Hello', 108] ] ) // => false
 -----------------------------------------------------------------------------*/
 // Your solution for 24-isWinningTicket here:
 
+function isWinningTicket(arrs){
+  return arrs.every(arr => arr[0].includes(String.fromCharCode(arr[1])))
+}
 
 
 
@@ -792,6 +852,14 @@ getNumForIP( '10.0.0.1' ) // => 167772161
 -----------------------------------------------------------------------------*/
 // Your solution for 25-getNumForIP here:
 
+function getNumForIP(ip) {
+  var chunks = ip.split('.').reverse()
+  var sum = 0
+  chunks.forEach(function(chunk, idx) {
+    sum += parseInt(chunk) * 256**idx
+  })
+  return sum
+}
 
 
 
@@ -821,7 +889,11 @@ toCamelCase( 'A_b_c' ) // => 'ABC'
 -----------------------------------------------------------------------------*/
 // Your solution for 26-toCamelCase here:
 
-
+function toCamelCase(str) {
+  return str.replace(/[_-]\w/g, function(match) {
+    return match.charAt(1).toUpperCase()
+  })
+}
 
 
 
@@ -851,7 +923,9 @@ countTheBits( 65535 ) //=> 16
 -----------------------------------------------------------------------------*/
 // Your solution for 27-countTheBits here:
 
-
+function countTheBits(int) {
+  return int.toString(2).split('').filter(bit => bit === '1').length
+}
 
 
 
@@ -880,7 +954,22 @@ gridTrip( [100, -22], 'L2L15D50U1D9') //=> [83, -80]
 -----------------------------------------------------------------------------*/
 // Your solution for 28-gridTrip here:
 
-
+function gridTrip(xyArr, moves) {
+  var result = [xyArr[0], xyArr[1]]
+  const lookup = {'R': [0, 1], 'U': [1, 1], 'L': [0, -1], 'D': [1, -1]}
+  var idx = 0;
+  while (idx < moves.length) {
+    var dir = moves[idx]
+    idx++
+    var numString = ''
+    while ('0123456789'.includes(moves[idx]) && idx < moves.length) {
+      numString += moves[idx]
+      idx++
+    }
+    result[lookup[dir][0]] += numString * lookup[dir][1]
+  }
+  return result
+}
 
 
 
@@ -910,7 +999,15 @@ addChecker( [10, 15, 16, 22], 19 ) // => false
 -----------------------------------------------------------------------------*/
 // Your solution for 29-addChecker here:
 
-
+function addChecker(nums, total) {
+  var result = false
+  for (i = 0; i < nums.length - 1; i++) {
+    for (j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === total) return true;
+    }
+  }
+  return result
+}
 
 
 
@@ -942,4 +1039,15 @@ totalTaskTime( [5, 2, 6, 8, 7, 2], 3 ) // => 12
 -----------------------------------------------------------------------------*/
 // Your solution for 30- here:
 
+function totalTaskTime(tasks, numThreads) {
+  var time = 0, shortest, threads
+  while(tasks.length > numThreads) {
+    threads = tasks.splice(0, numThreads)
+    shortest = Math.min(...threads)
+    time += shortest
+    threads = threads.map(t => t - shortest).filter(t => t)
+    tasks = threads.concat(tasks);
+  }
+  return time + (tasks.length ? Math.max(...tasks) : 0)
+}
 
