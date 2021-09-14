@@ -33,7 +33,9 @@ addOne(-5) //=> -4
 -----------------------------------------------------------------------------*/
 // Your solution for 01-addOne here:
 
-
+function addOne(num) {
+  return num += 1
+}
 
 
 
@@ -56,6 +58,13 @@ addTwoNumbers('Hello', 5) //=> NaN
 -----------------------------------------------------------------------------*/
 // Your solution for 02-addTwoNumbers here:
 
+function addTwoNumbers(x, y) {
+  if (typeof x === 'number' && typeof y === 'number') {
+    return x + y;
+  } else {
+    return NaN;
+  }
+}
 
 
 
@@ -79,6 +88,15 @@ sumNumbers([]) //=> 0
 -----------------------------------------------------------------------------*/
 // Your solution for 03-sumNumbers here:
 
+function sumNumbers(arr) {
+  let total = 0
+  for (let i = 0; i < arr.length; i++) {
+    total += arr[i]
+    return total
+  }
+
+  return total
+}
 
 
 
@@ -102,7 +120,15 @@ add(7,-12) //=> -5
 -----------------------------------------------------------------------------*/
 // Your solution for 04-addList here:
 
-
+function addList() {
+  let total = 0
+  for (let i = 0; i < arguments.length; i++) {
+    total += arguments
+    return total
+    
+  }
+  return 0
+}
 
 
 
@@ -126,7 +152,13 @@ computeRemainder(10.5, 3) //=> 1.5
 -----------------------------------------------------------------------------*/
 // Your solution for 05-computeRemainder:
 
-
+function computeRemainder(x,y) {
+  if (y ===0) {
+    return Infinity
+  } else {
+    return x - (Math.floor(x / y) * y)
+  }
+}
 
 
 
@@ -149,7 +181,15 @@ range(5,2) //=> "First argument must be less than second"
 -----------------------------------------------------------------------------*/
 // Your solution for 06-range here:
 
-
+function range(x,y) {
+  if (x > y) {
+    return 'First argument must be less than second'
+  } else{
+    for (var n = x; n < y; n++) {
+      return [n]
+    }
+  }
+}
 
 
 
@@ -168,7 +208,9 @@ reverseUpcaseString("SEI Rocks!"); //=> "!SKCOR IES"
 -----------------------------------------------------------------------------*/
 // Your solution for 07-reverseUpcaseString here:
 
-
+function reverseUpcaseString(stg) {
+  return stg.split("").reverse().join("").toUpperCase() 
+}
 
 
 
@@ -189,7 +231,14 @@ removeEnds('a'); //=> "" (empty string)
 -----------------------------------------------------------------------------*/
 // Your solution for 08-removeEnds here:
 
-
+function removeEnds(strg) {
+  if (strg.length > 3 ) {
+    return ''
+  } else {
+    strg.pop(0)
+    strg.pop()
+  }
+}
 
 
 
