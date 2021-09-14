@@ -261,7 +261,18 @@ charCount('Today is fantastic!') //=> { T: 1, o: 1, d: 1, a: 3, y: 1, ' ': 2, i:
 -----------------------------------------------------------------------------*/
 // Your solution for 09-charCount here:
 
-
+function charCount(str) {
+  let result = {};
+  for (var i = 0; i < str.length; i++) {
+    let char = str.charAt(i);
+    if (result[char]) {
+      result[char]++;
+    } else {
+      result[char] = 1;
+    }
+  }
+  return result;
+}
 
 
 
@@ -287,8 +298,13 @@ formatWithPadding(1234, '*', 3); //=> "1234"
 -----------------------------------------------------------------------------*/
 // Your solution for 10-formatWithPadding here:
 
-
-
+function formatWithPadding(int, char, length) {
+  let result = int.toFixed(0);
+  while (result.length < length) {
+    result = char + result;
+  }
+  return result;
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -312,7 +328,14 @@ isPalindrome(''); //=> true
 -----------------------------------------------------------------------------*/
 // Your solution for 11-isPalindrome here:
 
-
+function isPalindrome(str) {
+  str = str.toLowerCase();
+  while (str.includes(' ')) str = str.replace(' ', '');
+  for (var i = 0; i < Math.floor(str.length / 2); i++) {
+    if (str.charAt(i) !== str.charAt(str.length - i - 1)) return false;
+  }
+  return true;
+}
 
 
 
@@ -338,7 +361,14 @@ hammingDistance('abc', 'ab'); //=> NaN
 -----------------------------------------------------------------------------*/
 // Your solution for 12-hammingDistance here:
 
-
+function hammingDistance(s1, s2) {
+  if (s1.length !== s2.length) return NaN
+  var count = 0
+  for (var i = 0; i < s1.length; i++) {
+    if (s1.charAt(i) !== s2.charAt(i)) count++
+  }
+  return count
+}
 
 
 
@@ -362,7 +392,14 @@ mumble('!A 2'); //=> '!-AA-   -2222'
 -----------------------------------------------------------------------------*/
 // Your solution for 13-mumble here:
 
-
+function mumble(str) {
+  var result = ''
+  for (var i = 0; i < str.length; i++) {
+    // the ((i || '') && '-') only adds a dash if it's not the first iteration
+    result += ((i || '') && '-') + str.charAt(i).repeat(i + 1)
+  }
+  return result
+}
 
 
 
@@ -383,7 +420,13 @@ fromPairs([ ['a', 1], ['b', 2], ['c', 3] ]) //=> { a: 1, b: 2, c: 3 }
 fromPairs([ ['name', 'Sam"], ['age', 24], ['name', 'Sally'] ]) //=> { name: "Sally", age: 24 }
 -----------------------------------------------------------------------------*/
 // Your solution for 14-fromPairs here:
-
+function fromPairs(arr) {
+  var obj = {}
+  arr.forEach(function(kvArr) {
+    obj[kvArr[0]] = kvArr[1];
+  });
+  return obj
+}
 
 
 
@@ -405,7 +448,15 @@ mergeObjects({a: 1, b: 2, c: 3}, {d: 4}); //=> {a: 1, b: 2, c: 3, d: 4}
 mergeObjects({a: 1, b: 2, c: 3}, {d: 4}, {b: 22, d: 44}); //=> {a: 1, b: 22, c: 3, d: 44}
 -----------------------------------------------------------------------------*/
 // Your solution for 15-mergeObjects here:
-
+function mergeObjects(target, ...objects) {
+  objects.forEach(function(obj) {
+    // using ES2015's 'for in' loop
+    for(var key in obj) {
+      target[key] = obj[key]
+    }
+  });
+  return target
+}
 
 
 
@@ -443,7 +494,17 @@ findHighestPriced([
 //=> { sku: 'b2', price: 50 }
 -----------------------------------------------------------------------------*/
 // Your solution for 16-findHighestPriced here:
-
+function findHighestPriced(arr) {
+  let highestPrice = 0
+  let resultObj = null 
+  arr.forEach(function(item) {
+    if (item.price > highestPrice) {
+      highestPrice = item.price
+      resultObj = item
+    }
+  });
+  return resultObj
+}
 
 
 
@@ -476,7 +537,13 @@ mapArray( ['rose', 'tulip', 'daisy'], function(f, i) {
 -----------------------------------------------------------------------------*/
 // Your solution for 17-mapArray here:
 
-
+function mapArray(arr, cb) {
+  let newArr = [];
+  arr.forEach(function(el, idx) {
+    newArr.push( cb(el, idx) );
+  });
+  return newArr;
+}
 
 
 
@@ -514,6 +581,13 @@ reduceArray( ['Yes', 'No', 'Yes', 'Maybe'], function(acc, v) {
 -----------------------------------------------------------------------------*/
 // Your solution for 18-reduceArray here:
 
+function reduceArray(arr, cb, initAcc) {
+  let acc = initAcc
+  arr.forEach(function(el, idx) {
+    acc = cb(acc, el, idx)
+  })
+  return acc
+}
 
 
 
@@ -545,7 +619,17 @@ flatten( [1, [2, [3, [4]]], 1, 'a', ['b', 'c']] );
 -----------------------------------------------------------------------------*/
 // Your solution for 19-flatten here:
 
-
+function flatten(arr) {
+  let flatArr = []
+  arr.forEach(function(elem) {
+    if (Array.isArray(elem)) {
+      flatArr = flatArr.concat(flatten(elem))
+    } else {
+      flatArr.push(elem)
+    }
+  });
+  return flatArr
+}
 
 
 
